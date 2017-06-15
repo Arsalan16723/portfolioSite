@@ -61,7 +61,9 @@ class BlogsController < ApplicationController
     end
   end
 
-
+  def missing
+    
+  end
   def toggle_status
     if @blog.draft?
       @blog.published!
