@@ -1,7 +1,7 @@
 class PortfoliosController < ApplicationController
 
 	def index
-		@portfolio = Portfolio.all
+		@portfolios = Portfolio.all
 		
 	end
 	def new
@@ -14,7 +14,7 @@ class PortfoliosController < ApplicationController
 			flash[:notice] = 'item created'
 			redirect_to @portfolio_item
 		else
-			redirect root_path
+			redirect_to root_path
 		end
 	end
 
@@ -31,7 +31,7 @@ class PortfoliosController < ApplicationController
 		if @portfolio_item.update(portfolio_params)
 			redirect_to @portfolio_item
 		else
-			redirect_to index_path
+			redirect_to root_path
 		end
 	end
 
@@ -39,9 +39,14 @@ class PortfoliosController < ApplicationController
 		@portfolio_item = Portfolio.find(params[:id])
 		@portfolio_item.destroy
 		respond_to do |format|
-      format.html { redirect_to new_portfolio_path, notice: 'Post was removed.' }
-    end
+      		format.html { redirect_to new_portfolio_path, notice: 'Post was removed.' }
+    	end
 	end
+
+	def angular
+		@angular_portfolio_items = Portfolio.angular_portfolio_items
+	end
+
 
 
 
