@@ -1,7 +1,10 @@
 class Portfolio < ApplicationRecord
-	include Placeholder
-	has_many :technologies
-	validates_presence_of :title, :body, :main_image, :thumb_image
+  has_many :technologies
+  accepts_nested_attributes_for :technologies,
+                                reject_if: lambda {|attrs| attrs['name'].blank?}
+
+  include Placeholder
+  validates_presence_of :title, :body, :main_image, :thumb_image
 	scope :angular_portfolio_items, -> { where(subtitle: 'Ruby on Rails') }
 	after_initialize :set_defaults
 
@@ -13,3 +16,4 @@ class Portfolio < ApplicationRecord
 	end
 		
 end
+#Portfolio.create!(title: "Web app", subtitle: "asdfasd", body: "asdfasd", technologies_attributes [{name: 'Ruby'}, {name: 'Rails'}, {name: 'Angular'}, {name: 'Ionic'}])
